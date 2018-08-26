@@ -2,6 +2,8 @@
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
+    this.x=0;
+    this.y=0;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -25,7 +27,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-class players{
+class Players{
 	constructor(){
 		this.rowMove =83;
 		this.colMove =101;
@@ -71,9 +73,16 @@ class players{
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
+var allEnemies=[];
+for(var i =0;i<5;i++){
+	var enemy = new Enemy();
+	console.log(enemy);
+	allEnemies.push(enemy);
+}
+
 
 // Place the player object in a variable called player
-var player = new players();
+var player = new Players();
 
 
 
