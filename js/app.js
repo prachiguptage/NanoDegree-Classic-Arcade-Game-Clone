@@ -38,8 +38,10 @@ class Players{
 	constructor(){
 		this.rowMove =83;
 		this.colMove =101;
-		this.x = this.colMove*2;
-		this.y = this.rowMove*5 -18 ;
+		this.startX=this.colMove*2;
+		this.startY=this.rowMove*5 -18 ;
+		this.x = this.startX;
+		this.y = this.startY;
 		this.sprite = 'images/char-boy.png';
 	}
 
@@ -58,8 +60,7 @@ class Players{
 				 break;
 			case 'up':
 				if(this.y>0){
-					var yPosition = this.y- this.rowMove;
-					this.y = yPosition;
+					this.y= this.y- this.rowMove;
 				}
 				break;
 			case 'right':
@@ -68,20 +69,36 @@ class Players{
 				}
 				break;
 			case 'down':
-				if(this.y<this.rowMove*5){
-					this.y += this.rowMove;
+				if(this.y<this.rowMove*4){
+					this.y = this.y+ this.rowMove;
 				}
 				break;
-
 		}
-		//console.log(this.x,this.y);
+	}
+
+	update(){
+		for(let enemy of allEnemies){
+			if((this.y-enemy.y)===10 && -50<(this.x-enemy.x) && (this.x-enemy.x)<70){
+				this.reset();
+			}
+		}
+
+		if(this.y===-18){
+			console.log("win!");
+		}
+	}
+
+	reset(){
+
+		this.x = this.startX;
+		this.y = this.startY;
 	}
 }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var allEnemies=[];
-for(var i =0;i<3;i++){
+for(var i =0;i<6;i++){
 	var enemy = new Enemy(-(i%4)*101,((i%3)*83));
 	allEnemies.push(enemy);
 }
