@@ -27,16 +27,45 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 class players{
 	constructor(){
-		this.x = 0;
-		this.y = 0;
+		this.rowMove =83;
+		this.colMove =101;
+		this.x = this.colMove*2;
+		this.y = this.rowMove*5 -18 ;
 		this.sprite = 'images/char-boy.png';
 	}
 
 	//draw player on current x and y co ordinate
 	render(){
+
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
-	
+	//move player in x and Y coordinate
+	handleInput(input){
+		switch(input){
+			case 'left':
+				if(this.x>0){
+				 	this.x= this.x- this.colMove;
+				 }
+				 break;
+			case 'up':
+				if(this.y>0){
+					var yPosition = this.y- this.rowMove;
+					this.y = yPosition;
+				}
+				break;
+			case 'right':
+				if(this.x<this.colMove*4){
+					this.x = this.x+ this.colMove;
+				}
+				break;
+			case 'down':
+				if(this.y<this.rowMove*5){
+					this.y += this.rowMove;
+				}
+				break;
+
+		}
+		//console.log(this.x,this.y);
 	}
 }
 
