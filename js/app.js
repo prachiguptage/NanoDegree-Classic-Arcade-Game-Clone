@@ -36,7 +36,7 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 class Players{
 	constructor(){
-		this.lose=false;
+		this.lose=false; //to check whether player lose or not
 		this.rowMove =83;
 		this.colMove =101;
 		this.startX=this.colMove*2;
@@ -54,7 +54,8 @@ class Players{
 	}
 	//move player in x and Y coordinate
 	handleInput(input){
-		if(this.lose===false){
+		//if player collide or player reach river stop movement
+		if(this.lose===false || this.y===-18){
 			switch(input){
 				case 'left':
 					if(this.x>0){
@@ -82,8 +83,11 @@ class Players{
 	}
 
 	update(){
+		var temp =this;
 		if(this.y===-18){
-			this.victory=true;
+			setTimeout(function(){ temp.reset();}, 500);
+			createEnemy();
+			
 		}
 	}
 
@@ -98,9 +102,15 @@ class Players{
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var allEnemies=[];
-for(var i =0;i<6;i++){
-	var enemy = new Enemy(-(i%4)*101,((i%3)*83));
-	allEnemies.push(enemy);
+createEnemy();
+
+//creating enemy 
+function createEnemy(){
+	allEnemies=[];
+	for(var i =0;i<6;i++){
+		var enemy = new Enemy(-(i%4)*101,((i%3)*83));
+		allEnemies.push(enemy);
+	}
 }
 
 
