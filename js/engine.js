@@ -22,7 +22,18 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
-        lastTime;
+        lastTime,
+        id;
+
+    const modal = document.querySelector('.modal');
+    const replay = document.querySelector('.play-again');
+
+   replay.addEventListener('click', function() {
+        modal.style.display="none";
+        player.reset();
+        player.victory=false;
+        win.requestAnimationFrame(main)
+    });
 
     canvas.width = 505;
     canvas.height = 606;
@@ -55,7 +66,14 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+         
+         
+            id=win.requestAnimationFrame(main);
+    }
+
+    function gameOver(){
+        win.cancelAnimationFrame(id);
+        modal.style.display="block";
     }
 
     /* This function does some initial setup that should only occur once,
@@ -80,6 +98,13 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         // checkCollisions();
+
+        for(let enemy of allEnemies){
+            if((player.y-enemy.y)===10 && -50<(player.x-enemy.x) && (player.x-enemy.x)<70){
+                gameOver();
+            }
+        }
+
     }
 
     /* This is called by the update function and loops through all of the

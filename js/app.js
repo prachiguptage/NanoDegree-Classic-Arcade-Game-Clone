@@ -77,14 +77,9 @@ class Players{
 	}
 
 	update(){
-		for(let enemy of allEnemies){
-			if((this.y-enemy.y)===10 && -50<(this.x-enemy.x) && (this.x-enemy.x)<70){
-				this.reset();
-			}
-		}
-
+		
 		if(this.y===-18){
-			console.log("win!");
+			this.victory=true;
 		}
 	}
 
