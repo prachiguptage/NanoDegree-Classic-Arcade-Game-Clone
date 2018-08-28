@@ -27,11 +27,12 @@ var Engine = (function(global) {
 
     const modal = document.querySelector('.modal');
     const replay = document.querySelector('.play-again');
+    const score = document.querySelector('.score');
 
    replay.addEventListener('click', function() {
         modal.style.display="none";
         player.reset();
-        player.victory=false;
+        player.score=0;
         win.requestAnimationFrame(main)
     });
 
@@ -71,7 +72,9 @@ var Engine = (function(global) {
             id=win.requestAnimationFrame(main);
     }
 
+    /* on collision function is called to display block*/
     function gameOver(){
+        score.innerHTML = player.score;
         win.cancelAnimationFrame(id);
         modal.style.display="block";
     }
@@ -101,6 +104,7 @@ var Engine = (function(global) {
 
         for(let enemy of allEnemies){
             if((player.y-enemy.y)===10 && -50<(player.x-enemy.x) && (player.x-enemy.x)<70){
+                player.lose=true;
                 gameOver();
             }
         }

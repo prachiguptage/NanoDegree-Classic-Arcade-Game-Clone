@@ -36,12 +36,14 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 class Players{
 	constructor(){
+		this.lose=false;
 		this.rowMove =83;
 		this.colMove =101;
 		this.startX=this.colMove*2;
 		this.startY=this.rowMove*5 -18 ;
 		this.x = this.startX;
 		this.y = this.startY;
+		this.score =0;
 		this.sprite = 'images/char-boy.png';
 	}
 
@@ -52,32 +54,34 @@ class Players{
 	}
 	//move player in x and Y coordinate
 	handleInput(input){
-		switch(input){
-			case 'left':
-				if(this.x>0){
-				 	this.x= this.x- this.colMove;
-				 }
-				 break;
-			case 'up':
-				if(this.y>0){
-					this.y= this.y- this.rowMove;
-				}
-				break;
-			case 'right':
-				if(this.x<this.colMove*4){
-					this.x = this.x+ this.colMove;
-				}
-				break;
-			case 'down':
-				if(this.y<this.rowMove*4){
-					this.y = this.y+ this.rowMove;
-				}
-				break;
+		if(this.lose===false){
+			switch(input){
+				case 'left':
+					if(this.x>0){
+				 		this.x= this.x- this.colMove;
+				 	}
+				 	break;
+				case 'up':
+					if(this.y>0){
+						this.y= this.y- this.rowMove;
+					}
+					break;
+				case 'right':
+					if(this.x<this.colMove*4){
+						this.x = this.x+ this.colMove;
+					}
+					break;
+				case 'down':
+					if(this.y<this.rowMove*4){
+						this.y = this.y+ this.rowMove;
+					}
+					break;
+			}
+			this.score=this.score+1;
 		}
 	}
 
 	update(){
-		
 		if(this.y===-18){
 			this.victory=true;
 		}
@@ -87,6 +91,7 @@ class Players{
 
 		this.x = this.startX;
 		this.y = this.startY;
+		this.lose=false;
 	}
 }
 
