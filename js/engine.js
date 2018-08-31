@@ -28,6 +28,7 @@ var Engine = (function(global) {
     const modal = document.querySelector('.modal');
     const replay = document.querySelector('.play-again');
     const score = document.querySelector('.score');
+   
 
    replay.addEventListener('click', function() {
         modal.style.display="none";
@@ -164,6 +165,7 @@ var Engine = (function(global) {
                  * we're using them over and over.
                  */
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                
             }
         }
 
@@ -202,7 +204,7 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
     ]);
     Resources.onReady(init);
 

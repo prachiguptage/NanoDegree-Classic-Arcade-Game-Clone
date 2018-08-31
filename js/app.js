@@ -1,3 +1,4 @@
+var numberOfEnemies = Math.floor(Math.random()*3);
 // Enemies our player must avoid
 var Enemy = function(x,y) {
     // Variables applied to each of our instances go here,
@@ -5,7 +6,7 @@ var Enemy = function(x,y) {
     this.x=x;
     this.y=y+55;
     this.step = 101;
-    this.boundary= this.step*5;
+    this.boundary= this.step*4;
     this.resetPosition = -this.step;
 
     // The image/sprite for our enemies, this uses
@@ -65,6 +66,7 @@ class Players{
 				case 'up':
 					if(this.y>0){
 						this.y= this.y- this.rowMove;
+						this.score=this.score+1;
 					}
 					break;
 				case 'right':
@@ -75,10 +77,10 @@ class Players{
 				case 'down':
 					if(this.y<this.rowMove*4){
 						this.y = this.y+ this.rowMove;
+						this.score=this.score-1;
 					}
 					break;
 			}
-			this.score=this.score+1;
 		}
 	}
 
@@ -86,7 +88,7 @@ class Players{
 		var temp =this;
 		if(this.y===-18){
 			setTimeout(function(){ temp.reset();}, 500);
-			createEnemy();
+			createEnemy(numberOfEnemies+1);
 			
 		}
 	}
@@ -102,12 +104,12 @@ class Players{
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var allEnemies=[];
-createEnemy();
+createEnemy(numberOfEnemies);
 
 //creating enemy 
-function createEnemy(){
+function createEnemy(numOfEnemies){
 	allEnemies=[];
-	for(var i =0;i<6;i++){
+	for(var i =0;i<=numOfEnemies;i++){
 		var enemy = new Enemy(-(i%4)*101,((i%3)*83));
 		allEnemies.push(enemy);
 	}
