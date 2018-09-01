@@ -34,6 +34,7 @@ var Engine = (function(global) {
         modal.style.display="none";
         player.reset();
         player.score=0;
+        resetGem();
         win.requestAnimationFrame(main)
     });
 
@@ -107,6 +108,29 @@ var Engine = (function(global) {
             if((player.y-enemy.y)===10 && -50<(player.x-enemy.x) && (player.x-enemy.x)<70){
                 player.lose=true;
                 gameOver();
+            }
+        }
+
+        if(!player.lose){
+            if(blueGem.present){
+                if((player.y-blueGem.y)===-47 && (player.x-blueGem.x)===-29){
+                    player.score+=2;
+                    blueGem.delete();
+                }
+            }
+
+            if(greenGem.present){
+                if((player.y-greenGem.y)===-54 && (player.x-greenGem.x)===-15){
+                    player.score+=3;
+                   greenGem.delete();
+                }
+            }
+
+            if(orangeGem.present){
+                if((player.y-orangeGem.y)===-36 && (player.x-orangeGem.x)===-11){
+                    player.score+=4;
+                   orangeGem.delete();
+                }
             }
         }
 
@@ -185,6 +209,9 @@ var Engine = (function(global) {
         });
 
         player.render();
+        blueGem.render();
+        greenGem.render();
+        orangeGem.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -205,6 +232,13 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Gem Orange.png'
     ]);
     Resources.onReady(init);
 

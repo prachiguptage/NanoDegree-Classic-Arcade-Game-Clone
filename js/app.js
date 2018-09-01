@@ -1,13 +1,17 @@
-var numberOfEnemies = Math.floor(Math.random()*3);
+const numberOfEnemies = Math.floor(Math.random()*3);
+const playerImages =['char-boy','char-cat-girl','char-horn-girl','char-pink-girl','char-princess-girl'];
+const rowSize=83;
+const colSize=101;
 // Enemies our player must avoid
-var Enemy = function(x,y) {
+var Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     this.x=x;
     this.y=y+55;
-    this.step = 101;
+    this.step = colSize;
     this.boundary= this.step*4;
     this.resetPosition = -this.step;
+    this.speed = speed;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -36,16 +40,16 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Players{
-	constructor(){
+	constructor(image){
 		this.lose=false; //to check whether player lose or not
-		this.rowMove =83;
-		this.colMove =101;
+		this.rowMove =rowSize;
+		this.colMove =colSize;
 		this.startX=this.colMove*2;
 		this.startY=this.rowMove*5 -18 ;
 		this.x = this.startX;
 		this.y = this.startY;
 		this.score =0;
-		this.sprite = 'images/char-boy.png';
+		this.sprite = 'images/'+image+'.png';
 	}
 
 	//draw player on current x and y co ordinate
@@ -89,6 +93,7 @@ class Players{
 		if(this.y===-18){
 			setTimeout(function(){ temp.reset();}, 500);
 			createEnemy(numberOfEnemies+1);
+			resetGem();
 			
 		}
 	}
@@ -101,6 +106,33 @@ class Players{
 	}
 }
 
+//creating gems
+const gemsArray =['Gem Blue','Gem Green','Gem Orange'];
+class gems{
+	constructor(x,y,image){
+		this.intialX=x;
+		this.x=x;
+		this.y=y;
+		this.sprite='images/'+image+'.png';
+		this.present=true;
+	}
+
+	render(){
+
+		ctx.drawImage(Resources.get(this.sprite), this.x, this.y,70,100);
+	}
+
+	delete(){
+		this.x= colSize*5;
+		this.present=false;
+	}
+
+	reset(){
+		this.x=this.intialX;
+		this.present=true;
+	}
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var allEnemies=[];
@@ -110,14 +142,26 @@ createEnemy(numberOfEnemies);
 function createEnemy(numOfEnemies){
 	allEnemies=[];
 	for(var i =0;i<=numOfEnemies;i++){
-		var enemy = new Enemy(-(i%4)*101,((i%3)*83));
+		var enemy = new Enemy(-(i%4)*colSize,((i%3)*rowSize));
 		allEnemies.push(enemy);
 	}
 }
 
+//create gems
+var blueGem = new gems(rowSize*3-18,colSize*3-25,gemsArray[0]);
+var greenGem= new gems (rowSize*2-50,colSize*2,gemsArray[1]);
+var orangeGem = new gems(rowSize*4-18,colSize,gemsArray[2]);
+
+function resetGem(){
+	blueGem.reset();
+	greenGem.reset();
+	orangeGem.reset();
+}
+
 
 // Place the player object in a variable called player
-var player = new Players();
+var playerImg = Math.floor(Math.random()*5);
+var player = new Players(playerImages[playerImg]);
 
 
 
